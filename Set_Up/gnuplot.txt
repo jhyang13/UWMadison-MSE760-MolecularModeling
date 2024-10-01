@@ -1,0 +1,10 @@
+
+cd 'C:/Users/jhyan/Downloads/silicon/'
+
+
+load 'plot.v4.gnu' 
+
+
+
+
+
