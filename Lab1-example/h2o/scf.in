@@ -1,0 +1,32 @@
+&CONTROL
+  calculation = 'scf'
+  prefix='h2o'
+  pseudo_dir = './'
+  outdir='./'
+  verbosity = 'high',
+  wf_collect=.true.
+/
+&SYSTEM
+  ibrav       = 1,
+  celldm(1)   = 15.117807909,
+  nat         = 3,
+  ntyp        = 2,
+  ecutwfc     = 40.0
+  ecutrho     = 200.0
+  nbnd        = 8
+  assume_isolated = 'mp'
+/
+&ELECTRONS
+  conv_thr    = 1.D-8,
+/
+&IONS
+/
+ATOMIC_SPECIES
+O  16.0  o_pbe_v1.2.uspp.F.UPF
+H  1.0  h_pbe_v1.4.uspp.F.UPF
+K_POINTS gamma
+ATOMIC_POSITIONS angstrom
+O        4.000000000   4.000000000   4.262145631
+H        3.230906158   4.000000000   4.868927185
+H        4.769093842   4.000000000   4.868927185
+

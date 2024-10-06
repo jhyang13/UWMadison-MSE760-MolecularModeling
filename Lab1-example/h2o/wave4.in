@@ -1,0 +1,16 @@
+&INPUTPP
+  prefix = "h2o"
+  outdir = "./"
+  filplot = "1.wave"
+  plot_num = 7,
+  kpoint(1) = 1,
+  kpoint(2) = 1,
+  kband(1) = 4,
+  kband(2) = 4,
+  lsign = .true.
+/
+&PLOT
+  iflag = 3
+  output_format = 5,
+  fileout = "wave.4.xsf"
+/
