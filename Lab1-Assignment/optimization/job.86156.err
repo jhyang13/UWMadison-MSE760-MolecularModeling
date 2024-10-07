@@ -1,0 +1,27 @@
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 86156.1 ON spark-a205 CANCELLED AT 2024-10-06T19:11:31 ***
+srun: error: spark-a205: task 0: Killed
+srun: error: spark-a205: task 1: Exited with exit code 1
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+At line 488 of file /local/acgrieder/spack_build/spack-stage-quantum-espresso-7.3.1-qvvxt2473iepktysw4gvdaes4taphsg7/spack-src/PP/src/plotband.f90 (unit = 2, file = 'bands.xmgr.1.2')
+Fortran runtime error: File cannot be deleted
+
+Error termination. Backtrace:
+#0  0x14992fa3c8b2 in ???
+#1  0x14992fa3d449 in ???
+#2  0x14992fa3dfff in ???
+#3  0x14992fc7fb7c in ???
+#4  0x409607 in ???
+#5  0x4044bc in ???
+#6  0x14992f62958f in ???
+#7  0x14992f62963f in ???
+#8  0x4044e4 in ???
+#9  0xffffffffffffffff in ???
+srun: error: spark-a205: task 0: Exited with exit code 2
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL

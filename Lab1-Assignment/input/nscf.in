@@ -8,10 +8,10 @@
 /
 &SYSTEM
   ibrav       = 2,
-  celldm(1)   = 6.737,
+  celldm(1)   = 6.614,
   nat         = 2,
   ntyp        = 1,
-  ecutwfc     = 20.0
+  ecutwfc     = 70.0
   ecutrho     = 200.0
   nbnd        = 8,
 /
