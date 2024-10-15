@@ -1,0 +1,8 @@
+ &input
+    asr='simple',
+    amass(1)=28.0855, 
+    flfrc='si.444.fc',
+    flfrq='si.freq'
+ /
+1
+    0.300000    0.200000    0.050000 

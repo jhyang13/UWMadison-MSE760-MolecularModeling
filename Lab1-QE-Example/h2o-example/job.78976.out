@@ -1,0 +1,18 @@
+spack ()
+{ 
+    : this is a shell function from: /home/groups/mse_course_ping/programs/spack/share/spack/setup-env.sh;
+    : the real spack script is here: /home/groups/mse_course_ping/programs/spack/bin/spack;
+    _spack_shell_wrapper "$@";
+    return $?
+}
+Running batch script with 2 tasks at date
+Running relax.in
+Running scf.in
+Running wave1.in
+Running wave2.in
+Running wave3.in
+Running wave4.in
+Running wave5.in
+Running wave6.in
+Converting relax.out to structure.xsf
+Finished H2O Example

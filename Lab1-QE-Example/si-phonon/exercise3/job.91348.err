@@ -1,0 +1,12 @@
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+
+mkdir fail: [2] No such file or directory
+slurmstepd: error: *** STEP 91348.1 ON spark-a029 CANCELLED AT 2024-10-15T10:45:24 ***
+srun: error: spark-a029: task 0: Killed
+srun: error: spark-a029: task 1: Exited with exit code 1
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL

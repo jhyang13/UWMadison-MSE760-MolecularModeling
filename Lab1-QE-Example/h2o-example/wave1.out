@@ -1,0 +1,61 @@
+
+     Program POST-PROC v.7.3.1 starts on 24Sep2024 at 10:19:52 
+
+     This program is part of the open-source Quantum ESPRESSO suite
+     for quantum simulation of materials; please cite
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 21 395502 (2009);
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 29 465901 (2017);
+         "P. Giannozzi et al., J. Chem. Phys. 152 154105 (2020);
+          URL http://www.quantum-espresso.org", 
+     in publications or presentations arising from this work. More details at
+     http://www.quantum-espresso.org/quote
+
+     Parallel version (MPI & OpenMP), running on       2 processor cores
+     Number of MPI processes:                 2
+     Threads/MPI process:                     1
+
+     MPI processes distributed on     1 nodes
+     R & G space division:  proc/nbgrp/npool/nimage =       2
+     343908 MiB available memory on the printing compute node when the environment starts
+
+
+     Reading xml data from directory:
+
+     ./h2o.save/
+
+     IMPORTANT: XC functional enforced from input :
+     Exchange-correlation= PBE
+                           (   1   4   3   4   0   0   0)
+     Any further DFT definition will be discarded
+     Please, verify this is what you really want
+
+
+     Parallelization info
+     --------------------
+     sticks:   dense  smooth     PW     G-vecs:    dense   smooth      PW
+     Min        1819    1458    361                82426    59130    7383
+     Max        1822    1459    364                82427    59135    7388
+     Sum        3641    2917    725               164853   118265   14771
+
+     Using Slab Decomposition
+
+
+     negative rho (up, down):  9.370E-04 0.000E+00
+
+     Calling punch_plot, plot_num =   7
+
+     Plotting k_point =   1  band =  1
+     Writing data to file  1.wave
+     Reading data from file  1.wave
+
+     Writing data to be plotted to file wave.1.xsf
+     Plot Type: 3D                     Output format: XCrySDen     
+
+     POST-PROC    :      1.56s CPU      1.75s WALL
+
+
+   This run was terminated on:  10:19:54  24Sep2024            
+
+=------------------------------------------------------------------------------=
+   JOB DONE.
+=------------------------------------------------------------------------------=
