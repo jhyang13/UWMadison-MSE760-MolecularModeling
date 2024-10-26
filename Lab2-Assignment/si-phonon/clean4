@@ -1,0 +1,3 @@
+cd exercise4
+rm * 
+cp ../data/ex4/* .

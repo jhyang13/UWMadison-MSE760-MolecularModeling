@@ -1,0 +1,25 @@
+ &control
+    calculation='scf'
+    restart_mode='from_scratch',
+    prefix='alas',
+    pseudo_dir = '/home/bonini/PW/qe-cvs-08-07-2009/q-e-scm-2009-07-08/espresso/pseudo/',
+    outdir='tmp//'
+ /
+ &system    
+    ibrav=  2, 
+    celldm(1) =10.50, 
+    nat=  2, 
+    ntyp= 2,
+    ecutwfc =16
+ /
+ &electrons
+    conv_thr =  1.0d-10
+ /
+ATOMIC_SPECIES
+ Al  26.98  Al.pz-vbc.UPF
+ As  74.92  As.pz-bhs.UPF
+ATOMIC_POSITIONS
+ Al 0.00 0.00 0.00
+ As 0.25 0.25 0.25
+K_POINTS AUTOMATIC
+4 4 4 1 1 1

@@ -1,5 +1,0 @@
- &bands
-    prefix  = 'si'
-    filband = 'bands.dat'
-    outdir  = './'
- /

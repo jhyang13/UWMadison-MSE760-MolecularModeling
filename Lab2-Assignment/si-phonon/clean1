@@ -1,0 +1,3 @@
+cd exercise1
+rm * 
+cp ../data/ex1/* .

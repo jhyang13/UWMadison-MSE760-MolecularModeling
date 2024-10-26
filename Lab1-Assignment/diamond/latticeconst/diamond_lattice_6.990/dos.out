@@ -1,0 +1,53 @@
+
+     Program DOS v.7.3.1 starts on  6Oct2024 at 14:35:11 
+
+     This program is part of the open-source Quantum ESPRESSO suite
+     for quantum simulation of materials; please cite
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 21 395502 (2009);
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 29 465901 (2017);
+         "P. Giannozzi et al., J. Chem. Phys. 152 154105 (2020);
+          URL http://www.quantum-espresso.org", 
+     in publications or presentations arising from this work. More details at
+     http://www.quantum-espresso.org/quote
+
+     Parallel version (MPI & OpenMP), running on       2 processor cores
+     Number of MPI processes:                 2
+     Threads/MPI process:                     1
+
+     MPI processes distributed on     1 nodes
+     R & G space division:  proc/nbgrp/npool/nimage =       2
+     479948 MiB available memory on the printing compute node when the environment starts
+
+
+     Reading xml data from directory:
+
+     ./diamond.save/
+
+     IMPORTANT: XC functional enforced from input :
+     Exchange-correlation= PBE
+                           (   1   4   3   4   0   0   0)
+     Any further DFT definition will be discarded
+     Please, verify this is what you really want
+
+
+     Parallelization info
+     --------------------
+     sticks:   dense  smooth     PW     G-vecs:    dense   smooth      PW
+     Min         168     168     75                 2007     2007     620
+     Max         169     169     76                 2008     2008     623
+     Sum         337     337    151                 4015     4015    1243
+
+     Using Slab Decomposition
+
+
+     Tetrahedra used
+
+
+     DOS          :      1.11s CPU      1.13s WALL
+
+
+   This run was terminated on:  14:35:12   6Oct2024            
+
+=------------------------------------------------------------------------------=
+   JOB DONE.
+=------------------------------------------------------------------------------=

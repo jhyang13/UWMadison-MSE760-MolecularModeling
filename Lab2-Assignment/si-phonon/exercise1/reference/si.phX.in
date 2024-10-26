@@ -1,0 +1,9 @@
+phonons at X
+ &inputph
+   outdir='tmp//',
+   prefix='si',
+   lnscf=.true.,
+   fildyn='dyn.X',
+   tr2_ph=1.0d-14,
+ /
+0.0 0.0 1.0

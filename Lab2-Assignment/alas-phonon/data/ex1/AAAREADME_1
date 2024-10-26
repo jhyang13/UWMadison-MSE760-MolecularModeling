@@ -1,0 +1,5 @@
+Here we introduce the phonon code. A calculation of the vibrational 
+frequencies of Si at the gamma point is shown. The calculation of the 
+electronic dielectric constant is also shown. Discussion of the input variables
+and of the output variables. Description of the dynamical matrix file.
+We discuss the importance of the acoustic sum rules.

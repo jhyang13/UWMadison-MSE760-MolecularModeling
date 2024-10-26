@@ -1,0 +1,11 @@
+phonons of Si at 0.5,0.5,0.5
+ &inputph
+  prefix='si',
+  outdir='tmp/',
+
+  lnscf=.true.,
+
+  fildyn='dyn.0.5,0.5,0.5'
+  tr2_ph=1.0d-14,
+ /
+0.5,0.5,0.5

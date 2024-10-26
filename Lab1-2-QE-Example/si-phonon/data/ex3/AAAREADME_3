@@ -1,0 +1,5 @@
+The phonon code is used to calculate the dynamical matrix at a regular mesh 
+of wave-vectors $q$ and the two codes q2r and matdyn for the calculation 
+of the interatomic force constants and of the complete phonon dispersion 
+are illustrated. We also discuss how to calculate the phonon density
+of states.
