@@ -21,5 +21,24 @@ This lab project focuses on determining the electronic structure and lattice con
 - Computing and analyzing the band structure and density of states, and comparing with experimental data.
 - Writing a detailed lab report that includes abstract, methods, results, discussion, and conclusions​(lab1-diamond).
 
+### Lab2-Assignment
+
+This lab instruction document includes three tasks focused on phonon calculations for bulk Silicon (Si) and Aluminum Arsenide (AlAs):
+- Task One: Bulk Silicon
+  - Calculate the total energy of bulk Si and report the value.
+  - Calculate and report the phonon frequency of bulk Si at the Gamma point.
+- Task Two: AlAs
+  - Calculate the total energy of AlAs and report it.
+  - Calculate and report the phonon frequency of AlAs at the Gamma point.
+  - Apply the Acoustic Sum Rule and LO-TO splitting, then report the adjusted phonon frequency at the Gamma point.
+- Task Three: Bulk Silicon
+  - Calculate the phonon frequency on a 4x4x4 uniform grid.
+  - Plot the phonon dispersion curve.
+  - Calculate and plot the phonon density of states.
+ 
+
+
+
+
 
 
