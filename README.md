@@ -2,6 +2,8 @@
 
 ## MS&E760: Molecular Modeling of Materials (001) FA24
 
+**Group Folder:** /home/groups/mse_course_ping
+
 ### Student
 
 Name: Jiahui Yang, Mechanical Engineering
