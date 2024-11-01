@@ -1,0 +1,141 @@
+LAMMPS (23 Jun 2022 - Update 4)
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+# MSE 401 Lab 2
+# Heat and cooling of Aluminum using Molecular Dynamics
+
+# Section 1: Setting up initial parameters
+
+# Define unit set and class of atomic model
+units metal
+atom_style atomic
+
+# Parameters for Problems 1.1 and 1.2:
+# -----------------------------------------------------------------------------
+variable AlLattice equal 4.04525
+variable EquilibrationTemperature equal 700
+variable RunTime_steps equal 10000
+variable StepSize equal 0.001
+# -----------------------------------------------------------------------------
+
+# Periodic boundary conditions along all three dimensions
+boundary p p p
+
+# Create an FCC lattice with the lattice spacing supplied supplied by the user
+# using a single conventional (orthogonal) unit cell
+
+lattice fcc ${AlLattice}
+lattice fcc 4.04525
+Lattice spacing in x,y,z = 4.04525 4.04525 4.04525
+region  box block 0 2 0 2 0 2 units lattice
+create_box  1 box
+Created orthogonal box = (0 0 0) to (8.0905 8.0905 8.0905)
+  1 by 1 by 2 MPI processor grid
+create_atoms 1 box
+Created 32 atoms
+  using lattice units in orthogonal box = (0 0 0) to (8.0905 8.0905 8.0905)
+  create_atoms CPU = 0.000 seconds
+
+# Specify which force fields or potentials to use
+pair_style eam/alloy
+pair_coeff * * ./Al_mm.eam.fs  Al
+Reading eam/alloy potential file ./Al_mm.eam.fs with DATE: 2007-06-11
+#pair_style	lj/cut 2.5
+#pair_coeff	1 1 1.0 1.0 2.5
+
+# Create files outside of any loops
+variable prallfile string prall.txt
+# Print headers
+print "Temp                     Press                     Vol                     Etotal" file ${prallfile}
+print "Temp                     Press                     Vol                     Etotal" file prall.txt
+Temp                     Press                     Vol                     Etotal
+
+# Set what thermodynamic information to print to log
+compute mytemp all temp
+compute mypress all pressure thermo_temp
+# compute statements to normalize the pe and ke
+compute NormPE all pe/atom
+compute NormKE all ke/atom
+# calculate average value over atoms
+compute avgPE all reduce ave c_NormPE
+compute avgKE all reduce ave c_NormKE
+# create variables for average Etotal, Temp, and Pressure, and vol
+variable avgEtotal   equal c_avgPE+c_avgKE
+variable vmytemp   equal c_mytemp
+variable vmypress   equal c_mypress
+variable vmyvol  equal vol
+
+# set thermo style which determines what thermo data will be displayed on each timestep of our runs
+thermo_style custom step time temp pe ke etotal c_mytemp c_mypress vol
+timestep ${StepSize}
+timestep 0.001
+
+# initial conditions
+velocity all create 300 825577 dist gaussian
+
+# Section 2: Starting MD runs
+
+# NPT equilibration run
+fix 1 all npt temp ${EquilibrationTemperature} ${EquilibrationTemperature} 0.1 iso 1 1 1 drag 1 # npt ensemble molecular dynamics.
+fix 1 all npt temp 700 ${EquilibrationTemperature} 0.1 iso 1 1 1 drag 1 
+fix 1 all npt temp 700 700 0.1 iso 1 1 1 drag 1 
+fix 2 all ave/time 1 1 1 c_mytemp c_mypress v_vmyvol v_avgEtotal file npteqfile.txt
+fix 3 all ave/time 1 1000 1000 c_mytemp c_mypress v_vmyvol v_avgEtotal file npteqfile_averages.txt
+thermo 1000
+run ${RunTime_steps}
+run 10000
+Neighbor list info ...
+  update every 1 steps, delay 10 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 8.5
+  ghost atom cutoff = 8.5
+  binsize = 4.25, bins = 2 2 2
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair eam/alloy, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton
+      stencil: half/bin/3d
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 3.596 | 3.596 | 3.596 Mbytes
+   Step          Time           Temp          PotEng         KinEng         TotEng        c_mytemp      c_mypress        Volume    
+         0   0              300           -109.14102      1.2021193     -107.9389       300            2430.0276      529.57331    
+      1000   1              607.5197      -106.26222      2.4343706     -103.82785      607.5197       149.55891      550.89896    
+      2000   2              685.95066     -105.97211      2.7486485     -103.22346      685.95066      2911.0157      554.11278    
+      3000   3              731.45019     -106.06207      2.9309681     -103.1311       731.45019     -2394.0815      555.91273    
+      4000   4              884.78946     -106.71095      3.5454084     -103.16555      884.78946      353.30496      551.22828    
+      5000   5              659.49084     -105.93542      2.6426223     -103.2928       659.49084     -3769.7392      556.19969    
+      6000   6              598.39043     -105.66301      2.3977891     -103.26522      598.39043     -683.4393       556.88251    
+      7000   7              784.35326     -106.30362      3.1429541     -103.16066      784.35326     -229.82768      553.14938    
+      8000   8              574.54047     -105.54076      2.3022207     -103.23854      574.54047     -2441.7715      558.71711    
+      9000   9              839.36467     -106.50868      3.3633884     -103.14529      839.36467     -2793.7341      554.98476    
+     10000   10             745.43948     -106.1374       2.9870241     -103.15037      745.43948     -2799.0504      555.62078    
+Loop time of 0.869571 on 2 procs for 10000 steps with 32 atoms
+
+Performance: 993.593 ns/day, 0.024 hours/ns, 11499.918 timesteps/s
+95.0% CPU use with 2 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.45008    | 0.48639    | 0.52271    |   5.2 | 55.94
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.091158   | 0.12745    | 0.16375    |  10.2 | 14.66
+Output  | 7.8597e-05 | 0.00010912 | 0.00013963 |   0.0 |  0.01
+Modify  | 0.24354    | 0.24472    | 0.2459     |   0.2 | 28.14
+Other   |            | 0.01089    |            |       |  1.25
+
+Nlocal:             16 ave          16 max          16 min
+Histogram: 2 0 0 0 0 0 0 0 0 0
+Nghost:            914 ave         914 max         914 min
+Histogram: 2 0 0 0 0 0 0 0 0 0
+Neighs:           1120 ave        1314 max         926 min
+Histogram: 1 0 0 0 0 0 0 0 0 1
+
+Total # of neighbors = 2240
+Ave neighs/atom = 70
+Neighbor list builds = 0
+Dangerous builds = 0
+unfix 1
+unfix 2
+unfix 3
+Total wall time: 0:00:00

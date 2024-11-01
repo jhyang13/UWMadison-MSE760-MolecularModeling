@@ -1,0 +1,72 @@
+# MSE 401 Lab 2
+# Heat and cooling of Aluminum using Molecular Dynamics
+
+# Section 1: Setting up initial parameters
+
+# Define unit set and class of atomic model
+units metal
+atom_style atomic
+
+# Parameters for Problems 1.1 and 1.2:
+# -----------------------------------------------------------------------------
+variable AlLattice equal 4.04525
+variable EquilibrationTemperature equal 700
+variable RunTime_steps equal 10000
+variable StepSize equal 0.001
+# -----------------------------------------------------------------------------
+
+# Periodic boundary conditions along all three dimensions
+boundary p p p
+
+# Create an FCC lattice with the lattice spacing supplied supplied by the user
+# using a single conventional (orthogonal) unit cell
+
+lattice fcc ${AlLattice}
+region  box block 0 2 0 2 0 2 units lattice
+create_box  1 box
+create_atoms 1 box
+
+# Specify which force fields or potentials to use
+pair_style eam/alloy
+pair_coeff * * ./Al_mm.eam.fs  Al
+#pair_style	lj/cut 2.5
+#pair_coeff	1 1 1.0 1.0 2.5
+
+# Create files outside of any loops
+variable prallfile string prall.txt
+# Print headers
+print "Temp                     Press                     Vol                     Etotal" file ${prallfile}
+
+# Set what thermodynamic information to print to log
+compute mytemp all temp
+compute mypress all pressure thermo_temp
+# compute statements to normalize the pe and ke
+compute NormPE all pe/atom 
+compute NormKE all ke/atom 
+# calculate average value over atoms
+compute avgPE all reduce ave c_NormPE
+compute avgKE all reduce ave c_NormKE
+# create variables for average Etotal, Temp, and Pressure, and vol
+variable avgEtotal   equal c_avgPE+c_avgKE
+variable vmytemp   equal c_mytemp
+variable vmypress   equal c_mypress
+variable vmyvol  equal vol
+
+# set thermo style which determines what thermo data will be displayed on each timestep of our runs
+thermo_style custom step time temp pe ke etotal c_mytemp c_mypress vol
+timestep ${StepSize}
+
+# initial conditions
+velocity all create 300 825577 dist gaussian
+
+# Section 2: Starting MD runs
+
+# NPT equilibration run
+fix 1 all npt temp ${EquilibrationTemperature} ${EquilibrationTemperature} 0.1 iso 1 1 1 drag 1 # npt ensemble molecular dynamics. 
+fix 2 all ave/time 1 1 1 c_mytemp c_mypress v_vmyvol v_avgEtotal file npteqfile.txt
+fix 3 all ave/time 1 1000 1000 c_mytemp c_mypress v_vmyvol v_avgEtotal file npteqfile_averages.txt
+thermo 1000
+run ${RunTime_steps}
+unfix 1
+unfix 2
+unfix 3
