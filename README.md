@@ -2,6 +2,10 @@
 
 ## MS&E760: Molecular Modeling of Materials (001) FA24
 
+![image](https://github.com/user-attachments/assets/2b7924f5-911a-44e6-baba-3b58df11d4dc)
+
+![image](https://github.com/user-attachments/assets/0e230409-017a-4f1b-9114-d7a6ee7e39e2)
+
 **Group Folder:** /home/groups/mse_course_ping
 
 ### Student
