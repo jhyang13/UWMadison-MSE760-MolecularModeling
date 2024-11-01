@@ -11,7 +11,6 @@ Name: Jiahui Yang, Mechanical Engineering
 Email: jyang753@wisc.edu
 
 ### Lab1-Assignment
-
 This lab project focuses on determining the electronic structure and lattice constant of fcc diamond, as part of MSE760. The tasks include:
 - Building the diamond structure (similar to fcc silicon but with a different lattice constant).
 - Achieving total energy convergence with respect to k-points and wavefunction cutoff, using norm-conserving pseudopotentials.
@@ -22,7 +21,6 @@ This lab project focuses on determining the electronic structure and lattice con
 - Writing a detailed lab report that includes abstract, methods, results, discussion, and conclusions​(lab1-diamond).
 
 ### Lab2-Assignment
-
 This lab instruction document includes three tasks focused on phonon calculations for bulk Silicon (Si) and Aluminum Arsenide (AlAs):
 - Task One: Bulk Silicon
   - Calculate the total energy of bulk Si and report the value.
@@ -36,6 +34,18 @@ This lab instruction document includes three tasks focused on phonon calculation
   - Plot the phonon dispersion curve.
   - Calculate and plot the phonon density of states.
  
+### Lab3 MD-Assignment
+This lab instruction document includes several tasks focused on calculating the thermodynamic and physical properties of Aluminum (Al) using Molecular Dynamics (MD) simulations:
+- Task One: Equilibration
+  - Calculate the equilibration time for volume, temperature, pressure, and total energy of the aluminum system during a temperature step, and record the timestep and total simulation time to reach equilibrium.
+  - Plot the changes in volume, temperature, pressure, and total energy against timesteps based on the equilibrated simulation data.
+- Task Two: Error Estimation
+  - Perform a one-million-step equilibration simulation, calculate the standard error for the mean volume and energy, and report the errors for different block counts (e.g., 5, 10, 100, 500, and 900).
+  - Plot the standard error for both volume and energy as a function of the number of blocks and use logarithmic fitting to extrapolate precision.
+- Task Three: Heating and Cooling
+  - Analyze the solidification/melting process of aluminum and identify the melting temperature from the heating and cooling curves.
+  - Calculate the latent heat for the phase transition using the phase diagram data.
+  - Estimate the specific heat and thermal expansion coefficient of aluminum by fitting the temperature-dependent data in the solid phase.
 
 
 
