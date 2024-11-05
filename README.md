@@ -6,7 +6,7 @@
 
 ![image](https://github.com/user-attachments/assets/0e230409-017a-4f1b-9114-d7a6ee7e39e2)
 
-**Group Folder:** /home/groups/mse_course_ping
+**Group Folder (CHTC):** /home/groups/mse_course_ping
 
 ### Student
 
