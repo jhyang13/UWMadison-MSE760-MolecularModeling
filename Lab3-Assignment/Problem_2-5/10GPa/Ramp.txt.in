@@ -1,0 +1,187 @@
+# MSE 401 Lab 2
+# Heat and cooling of Aluminum using Molecular Dynamics
+
+# Section 1: Setting up initial parameters
+
+# Define unit set and class of atomic model
+units metal
+atom_style atomic
+
+# Parameters for Problems 2.1:
+# -----------------------------------------------------------------------------
+variable TempInitial equal 900
+variable TempFinal equal 2000
+variable TempStep equal 25
+variable StepSize equal 0.001
+# -----------------------------------------------------------------------------
+
+# Periodic boundary conditions along all three dimensions
+boundary p p p
+
+# Create an FCC lattice with the lattice spacing supplied supplied by the user
+# using a single conventional (orthogonal) unit cell
+
+lattice fcc 4.04525
+region  box block 0 2 0 2 0 2 units lattice
+create_box  1 box
+create_atoms 1 box
+
+# Specify which force fields or potentials to use
+pair_style eam/alloy
+pair_coeff * * ./Al_mm.eam.fs  Al
+#pair_style	lj/cut 2.5
+#pair_coeff	1 1 1.0 1.0 2.5
+
+# Create files outside of any loops
+variable prallfile string prall.txt
+# Print headers
+print "Temp                     Press                     Vol                     Etotal" file ${prallfile}
+
+# Set what thermodynamic information to print to log
+compute mytemp all temp
+compute mypress all pressure thermo_temp
+# compute statements to normalize the pe and ke
+compute NormPE all pe/atom 
+compute NormKE all ke/atom 
+# calculate average value over atoms
+compute avgPE all reduce ave c_NormPE
+compute avgKE all reduce ave c_NormKE
+# create variables for average Etotal, Temp, and Pressure, and vol
+variable avgEtotal   equal c_avgPE+c_avgKE
+variable vmytemp   equal c_mytemp
+variable vmypress   equal c_mypress
+variable vmyvol  equal vol
+
+# set thermo style which determines what thermo data will be displayed on each timestep of our runs
+thermo_style custom step time temp pe ke etotal c_mytemp c_mypress vol
+timestep 0.001
+
+# Section 2: Starting MD runs
+
+# NVE stabilization run
+variable tempinit equal 600 # Use 2*${tempvar} for fixed E ensemble.
+velocity all create ${tempinit} 825577 dist gaussian
+fix 1 all nve # nve ensemble molecular dynamics. 
+fix 2 all ave/time 1 10 10 c_mytemp c_mypress v_vmyvol v_avgEtotal file nveeqfile.txt 
+thermo 1000 # Print every "thermo" timesteps
+run 5000
+unfix 2    
+unfix 1
+
+# NPT stabilization run
+fix 1 all npt temp 700 700 0.1 iso 100000 100000 1 drag 1 # npt ensemble molecular dynamics. 
+fix 2 all ave/time 1 10 10 c_mytemp c_mypress v_vmyvol v_avgEtotal file npteqfile.txt
+thermo 1000
+run 5000
+unfix 2
+unfix 1
+
+# --------------------------------------------------------------------------------------------
+# Generate loops to ramp temperature up
+variable LoopSize equal 21
+label LoopStart
+variable i loop ${LoopSize}
+print " "
+print "*******LOOP # $i*********"
+print " "
+variable tempvar equal ${TempStep}*${i}+${TempInitial}-${TempStep}
+variable rampup_eqavgfile string rampup_eqavg_${tempvar}.txt
+variable rampup_pravgfile string rampup_pravg_${tempvar}.txt
+# variable rampup_eqfile string rampup_eq_${tempvar}.txt
+
+# NPT Equilibration run at temperature
+reset_timestep 0
+variable eqrunl equal 1E4 # Keep > 10000 to avoid crashing fix lines below for time avg output
+fix 1 all npt temp ${tempvar} ${tempvar} 0.1 iso 100000 100000 1 drag 1 # npt ensemble molecular dynamics. 
+
+fix 2 all ave/time 1 10 10 c_mytemp c_mypress v_vmyvol v_avgEtotal file ${rampup_eqavgfile}
+# print to file average of every 10 steps. Every 10 femptoseconds
+
+
+# fix 3 all ave/time 1 10000 10000 c_mytemp c_mypress v_vmyvol v_avgEtotal file ${rampup_eqfile} 
+thermo 1000 # Print every "thermo" timesteps
+run ${eqrunl}
+unfix 2
+# unfix 3    
+
+# NPT Production run at temperature
+reset_timestep 0
+variable prrunl equal 1E4
+fix 3 all ave/time 1 10000 10000 c_mytemp c_mypress v_vmyvol v_avgEtotal
+fix 4 all ave/time 1 10 10 c_mytemp c_mypress v_vmyvol v_avgEtotal file ${rampup_pravgfile}
+# print to file average of every 10 steps. Every 10 femptoseconds
+
+thermo 1000 # Print every "thermo" timesteps
+run ${prrunl}
+variable final_temp_avg equal f_3[1]
+variable final_press_avg equal f_3[2]
+variable final_vol_avg equal f_3[3]
+variable final_etot_avg equal f_3[4]
+
+print "${final_temp_avg} ${final_press_avg} ${final_vol_avg} ${final_etot_avg}" append ${prallfile}
+
+unfix 3
+unfix 4
+#unfix 1
+
+next i
+jump Ramp.txt.in LoopStart
+variable i delete
+unfix 1
+
+# ----------------------------------------------------------------------------------------------------------
+# NPT stabilization run
+fix 1 all npt temp 1500 1500 0.1 iso 100000 100000 1 drag 1 # npt ensemble molecular dynamics. 
+fix 2 all ave/time 1 10 10 c_mytemp c_mypress v_vmyvol v_avgEtotal file npteqfile2.txt
+thermo 1000
+run 10000
+unfix 2
+unfix 1
+
+# ----------------------------------------------------------------------------------------------------------
+# Generate loops to ramp temperature down
+variable LoopSize equal 21
+label LoopStart2
+variable i loop ${LoopSize}
+print " "
+print "*******LOOP2 # $i*********"
+print " "
+variable tempvar equal ${TempFinal}+${TempStep}-${TempStep}*${i}
+variable rampdown_eqavgfile string rampdown_eqavg_${tempvar}.txt
+variable rampdown_pravgfile string rampdown_pravg_${tempvar}.txt
+# variable rampup_eqfile string rampup_eq_${tempvar}.txt
+
+# NPT Equilibration run at temperature
+reset_timestep 0
+variable eqrunl equal 1E4 # Keep > 10000 to avoid crashing fix lines below for time avg output
+fix 1 all npt temp ${tempvar} ${tempvar} 0.1 iso 1 1 1 drag 1 # npt ensemble molecular dynamics. 
+fix 2 all ave/time 1 10 10 c_mytemp c_mypress v_vmyvol v_avgEtotal file ${rampdown_eqavgfile}
+# print to file average of every 10 steps. Every 10 femptoseconds
+thermo 1000 # Print every "thermo" timesteps
+run ${eqrunl}
+unfix 2
+# unfix 3    
+
+# NPT Production run at temperature
+reset_timestep 0
+variable prrunl equal 1E4 
+fix 3 all ave/time 1 10000 10000 c_mytemp c_mypress v_vmyvol v_avgEtotal
+fix 4 all ave/time 1 10 10 c_mytemp c_mypress v_vmyvol v_avgEtotal file ${rampdown_pravgfile}
+# print to file average of every 10 steps. Every 10 femptoseconds
+
+thermo 1000 # Print every "thermo" timesteps
+run ${prrunl}
+variable final_temp_avg equal f_3[1]
+variable final_press_avg equal f_3[2]
+variable final_vol_avg equal f_3[3]
+variable final_etot_avg equal f_3[4]
+
+print "${final_temp_avg} ${final_press_avg} ${final_vol_avg} ${final_etot_avg}" append ${prallfile}
+
+unfix 3
+unfix 4
+#unfix 1
+
+next i
+jump Ramp.txt.in LoopStart2
+variable i delete
