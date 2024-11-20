@@ -57,7 +57,7 @@ This lab aims to predict material band gaps using machine learning techniques. T
 - Task 1: Data Cleaning
   - Filter reliable data, average duplicates, and plot bandgap distribution.
 
--Task 2: Feature Engineering
+- Task 2: Feature Engineering
   - Generate features with pymatgen, remove redundant features, and normalize.
 
 - Task 3: Model Training
