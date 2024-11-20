@@ -51,8 +51,16 @@ This lab instruction document includes several tasks focused on calculating the 
   - Calculate the latent heat for the phase transition using the phase diagram data.
   - Estimate the specific heat and thermal expansion coefficient of aluminum by fitting the temperature-dependent data in the solid phase.
 
-
-
+### Lab4 ML-Assignment
+Task 1: Data Cleaning
+- Filter reliable data, average duplicates, and plot bandgap distribution.
+Task 2: Feature Engineering
+- Generate features with pymatgen, remove redundant features, and normalize.
+Task 3: Model Training
+- Train a Random Forest model, optimize hyperparameters, and compare performance.
+Task 4: Prediction
+- Predict bandgaps for Si, SiO₂, and evaluate for high-bandgap and solar materials.
+Deliverables: Cleaned data, optimized features, performance metrics, and predictions.
 
 
 
